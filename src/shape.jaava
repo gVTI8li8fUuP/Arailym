@@ -1,0 +1,50 @@
+package models;
+
+import java.util.ArrayList;
+
+public class Shape {
+    private ArrayList<Point> pointList;
+
+    public Shape() {
+        pointList = new ArrayList<>();
+    }
+
+    public void addPoint(Point point) {
+        pointList.add(point);
+    }
+
+    public double calculatePerimeter() {
+        double perimeter = 0;
+        int numPoints = pointList.size();
+
+        for (int i = 0; i < numPoints - 1; i++) {
+            perimeter += pointList.get(i).calculateDistanceTo(pointList.get(i + 1));
+        }
+
+        perimeter += pointList.get(numPoints - 1).calculateDistanceTo(pointList.get(0));
+        return perimeter;
+    }
+
+    public double getAverageSide() {
+        return calculatePerimeter() / pointList.size();
+    }
+
+    public double getLongestSide() {
+        double maxLength = 0;
+        double currentLength;
+
+        for (int i = 0; i < pointList.size() - 1; i++) {
+            currentLength = pointList.get(i).calculateDistanceTo(pointList.get(i + 1));
+            if (currentLength > maxLength) {
+                maxLength = currentLength;
+            }
+        }
+
+        currentLength = pointList.get(pointList.size() - 1).calculateDistanceTo(pointList.get(0));
+        if (currentLength > maxLength) {
+            maxLength = currentLength;
+        }
+
+        return maxLength;
+    }
+}
